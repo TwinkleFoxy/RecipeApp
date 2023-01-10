@@ -34,23 +34,19 @@ struct MainView: View {
                     
                     
                     // Category List View
-                    VStack() {
-                        Text("Category List Recipe")
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(.top, 2)
-                    }
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                    .tabItem {
-                        Label("Category", systemImage: "list.bullet")
-                    }
-                    .tag(2)
-                    .background {
-                        Image("background-1")
-                            .resizable()
-                            .ignoresSafeArea()
-                    }
+                    RectangleCarouselCategoryView()
+                        .padding(.leading, 9)
+                        .padding(.top, 5)
+                        .tabItem {
+                            Label("Category", systemImage: "list.bullet")
+                        }
+                        .tag(2)
+                        .background {
+                            Image("background-1")
+                                .resizable()
+                                .ignoresSafeArea()
+                        }
+                        .environmentObject(firebaseManager)
                     
                     
                     // Favourite View
