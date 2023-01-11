@@ -72,7 +72,7 @@ class DetailRecipeViewModel: DetailRecipeViewModelProtocol, ObservableObject {
         if let tempTotalCarbohydrate = recipeFirebaseModel.totalCarbohydrate { totalCarbohydrate = "\(tempTotalCarbohydrate) g" } else { totalCarbohydrate = "No data" }
         if let tempDietaryFiber = recipeFirebaseModel.dietaryFiber { dietaryFiber = "\(tempDietaryFiber) g" } else { dietaryFiber = "No data" }
         if let tempTotalSugars = recipeFirebaseModel.totalSugars { totalSugars = "\(tempTotalSugars) g" } else { totalSugars = "No data" }
-        if let tempProtein = recipeFirebaseModel.prorein { protein = "\(tempProtein) g" } else { protein = "No data" }
+        if let tempProtein = recipeFirebaseModel.protein { protein = "\(tempProtein) g" } else { protein = "No data" }
         
         return NutritionRecipeModel(calories: calories,
                              totalFat: totalFat,

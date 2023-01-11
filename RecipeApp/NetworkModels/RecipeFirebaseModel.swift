@@ -34,14 +34,14 @@ struct RecipeFirebaseModel: Identifiable, Codable {
         var totalCarbohydrate: Int?
         var dietaryFiber: Int?
         var totalSugars: Int?
-        var prorein: Int?
+        var protein: Int?
         var metods: [String]
     
     static func getFakeData() -> RecipeFirebaseModel {
         RecipeFirebaseModel(documentID: "bvfwbhbih", publesherUserID: "fnerjnfjenjknier", name: "Cake",  nameForSearch: "cake", imagePreviewURL: nil,
                             imagesDescriptionURL: ["https://www.simplyrecipes.com/thmb/GOsUpfg8kJ6aCMqB6kdJnOK9lQg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2016__11__2016-12-06-SwissRoll-29-40a1c5c6b0cc4589bb6363156dc3ef44.jpg", "https://www.simplyrecipes.com/thmb/qWH09er2v40LHmthK8u0egN7yt4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-PieDough-LEAD-10-ceb8e647fb9d48be918d1d004dfefa57.jpg", "https://www.simplyrecipes.com/thmb/YYFnW0vPqylW6xUKlJjpThAjYm4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-PieDough-LEAD-7-84ecff9e88874da3a13aad297204e747.jpg"],
                             category: "ferge",
-                            description: "hdfhew eh fhe rhe rhergn  wf vdhvwehnv bwi bv", prepTime: "10 min", servings: 2, chill: "22 min", cookTime: "12 min", totalTime: "44 min", yield: 1, ingredients: ["mevmj", "feirugn", "cnhenvuek", "ijnfie"], calories: 11, saturatedFat: 1, totalFat: 2, cholesterol: 3, sodium: 1, totalCarbohydrate: 3, dietaryFiber: 5, totalSugars: 1, prorein: 5, metods: ["vbwuihbv", "viuwnviu", "nuiewnvi", "nviunrw", "nhwnew"])
+                            description: "hdfhew eh fhe rhe rhergn  wf vdhvwehnv bwi bv", prepTime: "10 min", servings: 2, chill: "22 min", cookTime: "12 min", totalTime: "44 min", yield: 1, ingredients: ["mevmj", "feirugn", "cnhenvuek", "ijnfie"], calories: 11, saturatedFat: 1, totalFat: 2, cholesterol: 3, sodium: 1, totalCarbohydrate: 3, dietaryFiber: 5, totalSugars: 1, protein: 5, metods: ["vbwuihbv", "viuwnviu", "nuiewnvi", "nviunrw", "nhwnew"])
     }
 
 }
