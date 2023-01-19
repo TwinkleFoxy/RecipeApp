@@ -67,12 +67,32 @@ struct MainView: View {
                             .resizable()
                             .ignoresSafeArea()
                     }
+                    
+                    // Account View
+                    AccountView(signInSwitcher: $firebaseManager.signInSwitcher)
+                        .tabItem {
+                            Label("Account", systemImage: "person")
+                        }
+                        .tag(5)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                        .background {
+                            Image("background-1")
+                                .resizable()
+                                .ignoresSafeArea()
+                        }
+                        .environmentObject(firebaseManager)
                 }
-                .navigationBarTitleDisplayMode(.inline)
+                .animation(.easeInOut(duration: 2), value: animate)
+                .transition(.slide)
+                .onAppear() {
+                    firebaseManager.addStateDidChangeListenerFirebase()
+                }
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
+
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
