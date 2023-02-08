@@ -17,12 +17,18 @@ class FirebaseManager: ObservableObject {
     @Published var publicRecipe: [RecipeFirebaseModel] = []
     @Published var filteredRecipe: [RecipeFirebaseModel] = []
     @Published var searchedRecipeForHomeView: [RecipeFirebaseModel] = []
+    @Published var userImage: UIImage?
+    @Published var name: String = "Your name"
+    @Published var signInSwitcher: Bool = false
+    
+    @Published var showAlertSwitcher: Bool = false
     @Published var alertTitle: String = ""
     @Published var alertMessage: String = ""
-    @Published var showAlertSwitcher: Bool = false
-    @Published var name: String = "Your name"
+}
+
+//MARK: - Firebase Firestore
+extension FirebaseManager {
     
-    //MARK: - Firebase Firestore
     func featchPublicRecipeWithMaxLimit(limit: Int = 10000) {
         DispatchQueue.main.async { [unowned self] in
             publicRecipe.removeAll()
@@ -85,10 +91,160 @@ class FirebaseManager: ObservableObject {
             }
         }
     }
+}
 
+//MARK: - Firebase Auth
+extension FirebaseManager {
+    
+    func signInSignUp(email: String, password: String, signInSwitcher: Bool) {
+        DispatchQueue.main.async {
+            if signInSwitcher {
+                Auth.auth().signIn(withEmail: email, password: password) { [unowned self] authResult, error in
+                    if let error = error {
+                        alertTitle = "Error. Can't login to account"
+                        alertMessage = error.localizedDescription
+                        showAlertSwitcher.toggle()
+                    } else {
+                        print("User SignIn Success")
+                    }
+                }
+            } else {
+                Auth.auth().createUser(withEmail: email, password: password) { [unowned self] authResult, error in
+                    if let error = error {
+                        alertTitle = "Error. Account not created"
+                        alertMessage = error.localizedDescription
+                        showAlertSwitcher.toggle()
+                    } else {
+                        alertTitle = "Account created."
+                        alertMessage = "Account create by email Success"
+                        showAlertSwitcher.toggle()
+                    }
+                }
+            }
+        }
+    }
+    
+    func getCurrentUserIDFirebase() -> String? {
+        guard let userUI = Auth.auth().currentUser?.uid else {
+            alertTitle = "Error"
+            alertMessage = "Can't recive user ID"
+            showAlertSwitcher.toggle()
+            return nil
+        }
+        return userUI
+    }
+    
+    func sendPasswordReset(email: String) {
+        DispatchQueue.main.async {
+            Auth.auth().sendPasswordReset(withEmail: email) { [unowned self] error in
+                if let error = error {
+                    alertTitle = "Can't restore password"
+                    alertMessage = error.localizedDescription
+                    showAlertSwitcher.toggle()
+                } else {
+                    alertTitle = "Request to restore password accepted"
+                    alertMessage = "Check your inbox for email to reset you password"
+                    showAlertSwitcher.toggle()
+                }
+            }
+        }
+    }
+    
+    func signOutFromFirebaseAuth(clousere: @escaping ()->()) {
+        DispatchQueue.main.async { [unowned self] in
+            do {
+                try Auth.auth().signOut()
+                name = "Your name"
+                userImage = nil
+                clousere()
+            } catch (let error) {
+                alertTitle = "Error. Can't logout from account"
+                alertMessage = error.localizedDescription
+                showAlertSwitcher.toggle()
+            }
+        }
+    }
+    
+    func addStateDidChangeListenerFirebase() {
+        Auth.auth().addStateDidChangeListener { [unowned self] auth, user in
+            if user !== nil {
+                signInSwitcher = true
+            } else {
+                signInSwitcher = false
+            }
+        }
+    }
+    
+    func featchUserDataFromFirebase() {
+        DispatchQueue.main.async { [unowned self] in
+            name = Auth.auth().currentUser?.displayName ?? "Your name"
+            if let imageURL = Auth.auth().currentUser?.photoURL {
+                if let imageData = try? Data(contentsOf: imageURL) {
+                    userImage = UIImage(data: imageData)
+                }
+            }
+        }
+    }
+    
+    func saveUserSettingsInFirebse(name: String, imageFormPicker: UIImage?, closure: @escaping ()->()) {
+        
+        guard let userID = Auth.auth().currentUser?.uid else {
+            alertTitle = "Error"
+            alertMessage = "Can't recive user ID"
+            showAlertSwitcher.toggle()
+            return
+        }
+        
+        let chaneUserDataRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        if !name.isEmpty {
+            chaneUserDataRequest?.displayName = name
+        }
+        if let imageFormPicker = imageFormPicker {
+            uploadImage(image: imageFormPicker, saveImagePath: "users/\(userID)/profileIcons") { [unowned self] url, error in
+                guard let url = url else {
+                    self.alertTitle = "Save photo failure"
+                    if let error = error {
+                        alertMessage = error.localizedDescription
+                    }
+                    showAlertSwitcher.toggle()
+                    return
+                }
+                chaneUserDataRequest?.photoURL = url
+                
+                chaneUserDataRequest?.commitChanges(completion: { [unowned self] error in
+                    if error == nil {
+                        //                self.alertTitle = "Save data succeed"
+                        //                self.alertMessage = "User profile data been updated"
+                        //                self.showAlertSwitcher.toggle()
+                        closure()
+                    } else {
+                        self.alertTitle = "Save data failure"
+                        if let error = error {
+                            alertMessage = error.localizedDescription
+                        }
+                        showAlertSwitcher.toggle()
+                    }
+                })
+            }
+        } else {
+            chaneUserDataRequest?.commitChanges(completion: { [unowned self] error in
+                if error == nil {
+                    closure()
+                } else {
+                    self.alertTitle = "Save data failure"
+                    if let error = error {
+                        alertMessage = error.localizedDescription
+                    }
+                    showAlertSwitcher.toggle()
+                }
+            })
+        }
+    }
 }
 
 
+
+// MARK: - Helpers
 extension FirebaseManager {
     
     private func convertFirebaseRecipeDataToRecipeFirebaseModel(documentID: String, data: [String : Any]) -> RecipeFirebaseModel {
@@ -146,6 +302,28 @@ extension FirebaseManager {
                 alertMessage = "Can't extract querySnapshot from Firebase"
                 showAlertSwitcher.toggle()
                 return nil
+            }
+        }
+    }
+    
+    private func uploadImage(image: UIImage, saveImagePath: String, complition: @escaping(_ url: URL?, _ error: Error?)->()) {
+        let firebaseStorageRefernce = Storage.storage().reference().child(saveImagePath)
+        
+        guard let imageData = image.jpegData(compressionQuality: 0.7) else { return }
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        
+        firebaseStorageRefernce.putData(imageData, metadata: metaData) { storageMetadata, error in
+            if error == nil{
+                firebaseStorageRefernce.downloadURL { downloadURL, error in
+                    if error == nil, let downloadURL = downloadURL {
+                        complition(downloadURL, nil)
+                    } else {
+                        complition(nil, error)
+                    }
+                }
+            } else {
+                complition(nil, error)
             }
         }
     }

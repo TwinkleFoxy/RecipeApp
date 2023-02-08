@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		883BD69C297075D300F5BC70 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883BD69B297075D300F5BC70 /* SignUpView.swift */; };
+		883BD69E2970763800F5BC70 /* ButtonWithGlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883BD69D2970763800F5BC70 /* ButtonWithGlowView.swift */; };
 		883C3C6C2964522400592905 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 883C3C6B2964522400592905 /* FirebaseAuth */; };
 		883C3C6E2964522400592905 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 883C3C6D2964522400592905 /* FirebaseDatabase */; };
 		883C3C702964522400592905 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 883C3C6F2964522400592905 /* FirebaseFirestore */; };
@@ -41,12 +43,20 @@
 		88983CFC2969F06000091F03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88983CFB2969F06000091F03 /* GoogleService-Info.plist */; };
 		88983D22296DB64500091F03 /* RectangleCarouselCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88983D21296DB64500091F03 /* RectangleCarouselCategoryView.swift */; };
 		88983D24296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88983D23296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift */; };
+		88EA713029716C5700FBB206 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA712F29716C5700FBB206 /* UserProfileView.swift */; };
+		88EA713229716CB700FBB206 /* GradientForPictureProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA713129716CB700FBB206 /* GradientForPictureProfileView.swift */; };
+		88EA7134297173D400FBB206 /* UserProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA7133297173D400FBB206 /* UserProfileSettingsView.swift */; };
+		88EA7138297185EA00FBB206 /* ImageButtonWithGlowIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA7137297185EA00FBB206 /* ImageButtonWithGlowIconView.swift */; };
+		88EA713A2971B27900FBB206 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA71392971B27900FBB206 /* ImagePickerView.swift */; };
+		88EA713C2972F4E000FBB206 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA713B2972F4E000FBB206 /* AccountView.swift */; };
 		88EB4A7429644EE800A2936A /* RecipeAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB4A7329644EE800A2936A /* RecipeAppApp.swift */; };
 		88EB4A7829644EE900A2936A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88EB4A7729644EE900A2936A /* Assets.xcassets */; };
 		88EB4A7B29644EE900A2936A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88EB4A7A29644EE900A2936A /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		883BD69B297075D300F5BC70 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		883BD69D2970763800F5BC70 /* ButtonWithGlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithGlowView.swift; sourceTree = "<group>"; };
 		883C3C73296452AC00592905 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		883C3C79296453FD00592905 /* RecipeFirebaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFirebaseModel.swift; sourceTree = "<group>"; };
 		883C3C7D2964546C00592905 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
@@ -77,6 +87,12 @@
 		88983CFB2969F06000091F03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88983D21296DB64500091F03 /* RectangleCarouselCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCarouselCategoryView.swift; sourceTree = "<group>"; };
 		88983D23296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCarouselCategoryViewModel.swift; sourceTree = "<group>"; };
+		88EA712F29716C5700FBB206 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		88EA713129716CB700FBB206 /* GradientForPictureProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientForPictureProfileView.swift; sourceTree = "<group>"; };
+		88EA7133297173D400FBB206 /* UserProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSettingsView.swift; sourceTree = "<group>"; };
+		88EA7137297185EA00FBB206 /* ImageButtonWithGlowIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButtonWithGlowIconView.swift; sourceTree = "<group>"; };
+		88EA71392971B27900FBB206 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		88EA713B2972F4E000FBB206 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		88EB4A7029644EE800A2936A /* RecipeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88EB4A7329644EE800A2936A /* RecipeAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAppApp.swift; sourceTree = "<group>"; };
 		88EB4A7729644EE900A2936A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,6 +114,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		883BD6992970756400F5BC70 /* AccountViews */ = {
+			isa = PBXGroup;
+			children = (
+				883BD69F2970791600F5BC70 /* AccountView */,
+				883BD69A297075BC00F5BC70 /* SignUpView */,
+				883BD6A02970793D00F5BC70 /* UserProfileView */,
+				883BD6A529707F0E00F5BC70 /* UserProfileSettingsView */,
+			);
+			path = AccountViews;
+			sourceTree = "<group>";
+		};
+		883BD69A297075BC00F5BC70 /* SignUpView */ = {
+			isa = PBXGroup;
+			children = (
+				883BD69B297075D300F5BC70 /* SignUpView.swift */,
+			);
+			path = SignUpView;
+			sourceTree = "<group>";
+		};
+		883BD69F2970791600F5BC70 /* AccountView */ = {
+			isa = PBXGroup;
+			children = (
+				88EA713B2972F4E000FBB206 /* AccountView.swift */,
+			);
+			path = AccountView;
+			sourceTree = "<group>";
+		};
+		883BD6A02970793D00F5BC70 /* UserProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				88EA712F29716C5700FBB206 /* UserProfileView.swift */,
+				88EA713129716CB700FBB206 /* GradientForPictureProfileView.swift */,
+			);
+			path = UserProfileView;
+			sourceTree = "<group>";
+		};
+		883BD6A529707F0E00F5BC70 /* UserProfileSettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				88EA7133297173D400FBB206 /* UserProfileSettingsView.swift */,
+			);
+			path = UserProfileSettingsView;
+			sourceTree = "<group>";
+		};
 		883C3C75296452AF00592905 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,9 +226,12 @@
 		883C3C892964572100592905 /* HelpersView */ = {
 			isa = PBXGroup;
 			children = (
+				88EA71392971B27900FBB206 /* ImagePickerView.swift */,
 				883C3CB02964695000592905 /* BackgroundGlowGradientView.swift */,
 				883C3CAB296468A600592905 /* IconTextFieldView.swift */,
 				883C3CA92964688E00592905 /* TextFieldWithGlowIconView.swift */,
+				88EA7137297185EA00FBB206 /* ImageButtonWithGlowIconView.swift */,
+				883BD69D2970763800F5BC70 /* ButtonWithGlowView.swift */,
 			);
 			path = HelpersView;
 			sourceTree = "<group>";
@@ -310,6 +373,7 @@
 				883C3CA42964601500592905 /* CategoryListRecipeView */,
 				883C3C9429645A4300592905 /* ListRecipeView */,
 				883C3C8C296457BE00592905 /* CategoryViews */,
+				883BD6992970756400F5BC70 /* AccountViews */,
 				883C3C892964572100592905 /* HelpersView */,
 				883C3C7F296454A400592905 /* Managers */,
 				883C3C7B2964540700592905 /* NetworkModels */,
@@ -417,6 +481,7 @@
 				88983D24296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift in Sources */,
 				883C3CC22966042500592905 /* TemplateMainView.swift in Sources */,
 				88983D22296DB64500091F03 /* RectangleCarouselCategoryView.swift in Sources */,
+				88EA713029716C5700FBB206 /* UserProfileView.swift in Sources */,
 				883C3C912964582600592905 /* RecipeCategoryCarouselView.swift in Sources */,
 				883C3CC42966048000592905 /* TemplateMainViewModel.swift in Sources */,
 				883C3CA129645C6200592905 /* ListRecipeViewModel.swift in Sources */,
@@ -426,7 +491,11 @@
 				883C3CA62964680300592905 /* CategoryListRecipeView.swift in Sources */,
 				883C3CAA2964688E00592905 /* TextFieldWithGlowIconView.swift in Sources */,
 				883C3CB12964695000592905 /* BackgroundGlowGradientView.swift in Sources */,
+				88EA7134297173D400FBB206 /* UserProfileSettingsView.swift in Sources */,
+				883BD69C297075D300F5BC70 /* SignUpView.swift in Sources */,
+				88EA713A2971B27900FBB206 /* ImagePickerView.swift in Sources */,
 				883C3CB32965B74700592905 /* MiniDetailsRecipeView.swift in Sources */,
+				88EA713229716CB700FBB206 /* GradientForPictureProfileView.swift in Sources */,
 				883C3CA82964682600592905 /* CategoryListRecipeViewModel.swift in Sources */,
 				883C3C9D29645B9200592905 /* RecipeCard2Model.swift in Sources */,
 				883C3CAC296468A600592905 /* IconTextFieldView.swift in Sources */,
@@ -437,9 +506,12 @@
 				883C3CBB2965CF5300592905 /* MiniDetailsRecipeModel.swift in Sources */,
 				883C3CC8296606FE00592905 /* HomeViewModel.swift in Sources */,
 				883C3CB72965B83600592905 /* DetailRecipeView.swift in Sources */,
+				88EA713C2972F4E000FBB206 /* AccountView.swift in Sources */,
 				883C3C7A296453FD00592905 /* RecipeFirebaseModel.swift in Sources */,
+				88EA7138297185EA00FBB206 /* ImageButtonWithGlowIconView.swift in Sources */,
 				88EB4A7429644EE800A2936A /* RecipeAppApp.swift in Sources */,
 				883C3C9F29645C5A00592905 /* ListRecipeView.swift in Sources */,
+				883BD69E2970763800F5BC70 /* ButtonWithGlowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
