@@ -7,6 +7,7 @@
 
 Application for finding and saving your recipes. Selection of recipes is possible by category. When opening a recipe card, the user can see: a photo of the finished product, the time spent on cooking, the number of servings, a description of the recipe, a list of ingredients for the recipe, the nutritional value of the finished product, step-by-step cooking instructions. The FirebaseAuth authentication service is used to register the user. The application has the ability to recover the password by sending a letter to the mail that was used when registering in the application. After registering with an email address in the FirebaseAuth authentication system, the user has the opportunity to save their recipes for a more convenient interaction with them. Saved recipes by the user are visible only to him and are not automatically published to the public catalog. The application is written using the MVVM pattern and the SwiftUI framework.
 
+![GifAccount][gif-account-url]
 ![Gif][gif-url]
 
 ## Features
@@ -75,3 +76,4 @@ Distributed under the GPL-2.0 license. See ``LICENSE`` for more information.
 [license-image]: https://img.shields.io/github/license/TwinkleFoxy/RecipeApp?color=brightgreen
 [license-url]: https://github.com/TwinkleFoxy/RecipeApp/blob/main/LICENSE
 [gif-url]: https://github.com/TwinkleFoxy/RecipeApp/blob/main/GIF/GIF.gif
+[gif-account-url]: https://github.com/TwinkleFoxy/RecipeApp/blob/main/GIF/GIFAccount.gif
