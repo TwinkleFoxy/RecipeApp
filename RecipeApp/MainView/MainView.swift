@@ -50,23 +50,39 @@ struct MainView: View {
                     
                     
                     // Favourite View
-                    VStack() {
-                        Text("Favourite Recipe")
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.white.opacity(0.7))
-                            .padding(.top, 2)
-                    }
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                    .tabItem {
-                        Label("Favourite", systemImage: "star")
-                    }
-                    .tag(3)
-                    .background {
-                        Image("background-1")
-                            .resizable()
-                            .ignoresSafeArea()
-                    }
+//                    VStack() {
+//                        Text("Favourite Recipe")
+//                            .font(.title2)
+//                            .bold()
+//                            .foregroundColor(.white.opacity(0.7))
+//                            .padding(.top, 2)
+//                    }
+//                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//                    .tabItem {
+//                        Label("Favourite", systemImage: "star")
+//                    }
+//                    .tag(3)
+//                    .background {
+//                        Image("background-1")
+//                            .resizable()
+//                            .ignoresSafeArea()
+//                    }
+                    
+                    // Self Saved Recipe View
+                    MyRecipeView(signInSwitcher: $firebaseManager.signInSwitcher)
+                        .padding(.leading, 9)
+                        .padding(.top, 5)
+                        .tabItem {
+                            Label("My Recipe", systemImage: "leaf")
+                        }
+                        .tag(4)
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                        .background {
+                            Image("background-1")
+                                .resizable()
+                                .ignoresSafeArea()
+                        }
+                        .environmentObject(firebaseManager)
                     
                     // Account View
                     AccountView(signInSwitcher: $firebaseManager.signInSwitcher)
