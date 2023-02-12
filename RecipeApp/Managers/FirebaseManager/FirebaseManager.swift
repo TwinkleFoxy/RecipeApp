@@ -17,6 +17,7 @@ class FirebaseManager: ObservableObject {
     @Published var publicRecipe: [RecipeFirebaseModel] = []
     @Published var filteredRecipe: [RecipeFirebaseModel] = []
     @Published var searchedRecipeForHomeView: [RecipeFirebaseModel] = []
+    @Published var searchedRecipeForMyRecipe: [RecipeFirebaseModel] = []
     @Published var userImage: UIImage?
     @Published var name: String = "Your name"
     @Published var signInSwitcher: Bool = false
@@ -72,6 +73,14 @@ extension FirebaseManager {
         }
     }
     
+    func searchRecipeForMyRecipeViwe(searchText: String, inCollection: String, limitToReceive: Int = 10000) {
+        DispatchQueue.main.async { [unowned self] in
+            searchedRecipeForMyRecipe.removeAll()
+            searchRecipe(searchText: searchText, byField: "nameForSearch", inCollection: inCollection, limitToReceive: limitToReceive) { [unowned self] searchedRecipe in
+                searchedRecipeForMyRecipe = searchedRecipe
+            }
+        }
+    }
     
     private func searchRecipe(searchText: String, byField name: String, inCollection nameCollection: String, limitToReceive: Int = 100000, clousere: @escaping ([RecipeFirebaseModel])->()) {
         
@@ -88,6 +97,35 @@ extension FirebaseManager {
             if let arrayRecipeFirebaseModel = arrayRecipeFirebaseModel {
                 searchResultArray = arrayRecipeFirebaseModel
                 clousere(searchResultArray)
+            }
+        }
+    }
+    
+    func addUserRecipeDocument(previewImage: UIImage?, descriptionImages: [UIImage], recipeFirebaseModel: RecipeFirebaseModel, clousere: @escaping ()->()) {
+        
+        var previewImageURL: String = ""
+        var descriptionImagesURL: [String] = []
+        
+        
+        guard let userID = Auth.auth().currentUser?.uid else {
+            alertTitle = "Error"
+            alertMessage = "Can't recive user ID"
+            showAlertSwitcher.toggle()
+            return
+        }
+        
+        let db = Firestore.firestore()
+        
+        let firebaseDocument = db.collection(userID).document()
+        let documentID = firebaseDocument.documentID
+        
+        uploadPreviewImageForRecipe(previewImage: previewImage, userID: userID, documentID: documentID) { [unowned self] imageURLString in
+            previewImageURL = imageURLString
+            uploadDescriptionImage(descriptionImages: descriptionImages, userID: userID, documentID: documentID) { [unowned self] imagesURLArrayString in
+                descriptionImagesURL = imagesURLArrayString
+                saveDocumentResipe(publesherUserID: userID, recipeFirebaseModel: recipeFirebaseModel, previewImageURL: previewImageURL, descriptionImagesURL: descriptionImagesURL, firebaseDocument: firebaseDocument) {
+                    clousere()
+                }
             }
         }
     }
@@ -278,6 +316,37 @@ extension FirebaseManager {
         return RecipeFirebaseModel(documentID: documentID, publesherUserID: publesherUserID, name: name, nameForSearch: nameForSearch, imagePreviewURL: imagePreviewURL, imagesDescriptionURL: imagesDescriptionURL, category: category, description: description, prepTime: prepTime, servings: servings, chill: chill, cookTime: cookTime, totalTime: totalTime, yield: yield, ingredients: ingredients, calories: calories, saturatedFat: saturatedFat, totalFat: totalFat, cholesterol: cholesterol, sodium: sodium, totalCarbohydrate: totalCarbohydrate, dietaryFiber: dietaryFiber, totalSugars: totalSugars, protein: protein, metods: metods)
     }
     
+    private func convertRecipeFirebaseModelToFirebaseRecipeData(userRecipe: RecipeFirebaseModel) -> [String: Any] {
+        let firebaseRecipeData = [
+            "publesherUserID": userRecipe.publesherUserID ?? "",
+            "name": userRecipe.name,
+            "nameForSearch": userRecipe.nameForSearch,
+            "imagePreviewURL": userRecipe.imagePreviewURL ?? "",
+            "imagesDescriptionURL": userRecipe.imagesDescriptionURL ?? [""],
+            "category": userRecipe.category,
+            "description": userRecipe.description,
+            "prepTime": userRecipe.prepTime,
+            "servings": userRecipe.servings ?? "No data",
+            "chill": userRecipe.chill,
+            "cookTime": userRecipe.cookTime,
+            "totalTime": userRecipe.totalTime,
+            "yield": userRecipe.yield ?? "No data",
+            "ingredients": userRecipe.ingredients,
+            
+            "calories": userRecipe.calories ?? "No data",
+            "saturatedFat": userRecipe.saturatedFat ?? "No data",
+            "totalFat": userRecipe.totalFat ?? "No data",
+            "cholesterol": userRecipe.cholesterol ?? "No data",
+            "sodium": userRecipe.sodium ?? "No data",
+            "totalCarbohydrate": userRecipe.totalCarbohydrate ?? "No data",
+            "dietaryFiber": userRecipe.dietaryFiber ?? "No data",
+            "totalSugars": userRecipe.totalSugars ?? "No data",
+            "protein": userRecipe.protein ?? "No data",
+            "metods": userRecipe.metods
+        ] as [String: Any]
+        return firebaseRecipeData
+    }
+    
     private func checkQuerySnapshotRecipeFromFirebase(querySnapshot: QuerySnapshot?, error: Error?) -> [RecipeFirebaseModel]? {
         var arrayRecipeFirebaseModel: [RecipeFirebaseModel] = []
         
@@ -326,6 +395,84 @@ extension FirebaseManager {
                 complition(nil, error)
             }
         }
+    }
+    private func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+}
+
+
+
+// MARK: - Private funcs upload resipe
+extension FirebaseManager {
+    
+    private func uploadPreviewImageForRecipe(previewImage: UIImage?, userID: String, documentID: String, clousere: @escaping (_ imageURLString: String) -> ()) {
+        // Upload preview image
+        if let previewImage = previewImage {
+            uploadImage(image: previewImage, saveImagePath: "users/\(userID)/\(documentID)/\(randomString(length: 10))") { [unowned self] url, error in
+                guard let url = url else {
+                    self.alertTitle = "Save photo failure"
+                    if let error = error {
+                        alertMessage = error.localizedDescription
+                    }
+                    showAlertSwitcher.toggle()
+                    clousere("")
+                    return
+                }
+                clousere(url.absoluteString)
+            }
+        } else {
+            clousere("")
+        }
+    }
+    
+    private func uploadDescriptionImage(descriptionImages: [UIImage], userID: String, documentID: String, clousere: @escaping (_ imagesURLArrayString: [String]) -> ()) {
+        // Upload description image
+        var descriptionImagesURL: [String] = []
+        
+        if !descriptionImages.isEmpty {
+            descriptionImages.forEach { descriptionImage in
+                uploadImage(image: descriptionImage, saveImagePath: "users/\(userID)/\(documentID)/\(randomString(length: 10))") { [unowned self] url, error in
+                    guard let url = url else {
+                        self.alertTitle = "Save photo failure"
+                        if let error = error {
+                            alertMessage = error.localizedDescription
+                        }
+                        showAlertSwitcher.toggle()
+                        clousere([])
+                        return
+                    }
+                    descriptionImagesURL.append(url.absoluteString)
+                    if descriptionImages.count == descriptionImagesURL.count {
+                        clousere(descriptionImagesURL)
+                    }
+                }
+            }
+        } else {
+            clousere([])
+        }
+    }
+    
+    private func saveDocumentResipe(publesherUserID: String, recipeFirebaseModel: RecipeFirebaseModel, previewImageURL: String, descriptionImagesURL: [String], firebaseDocument: DocumentReference, clousere: @escaping () -> ()) {
+        var recipeFirebaseModel = recipeFirebaseModel
+        recipeFirebaseModel.imagePreviewURL = previewImageURL
+        recipeFirebaseModel.imagesDescriptionURL = descriptionImagesURL
+        recipeFirebaseModel.publesherUserID = publesherUserID
+        
+        let userRecipe = convertRecipeFirebaseModelToFirebaseRecipeData(userRecipe: recipeFirebaseModel)
+        
+        // Save new Document Recipe
+        firebaseDocument.setData(userRecipe, completion: { [unowned self] error in
+            if error == nil {
+                clousere()
+            } else {
+                alertTitle = "Error can't save recipe"
+                alertMessage = error?.localizedDescription ?? "Can't create document"
+                showAlertSwitcher.toggle()
+                clousere()
+            }
+        })
     }
 }
 

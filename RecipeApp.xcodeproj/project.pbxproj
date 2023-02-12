@@ -40,6 +40,13 @@
 		883C3CC42966048000592905 /* TemplateMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C3CC32966048000592905 /* TemplateMainViewModel.swift */; };
 		883C3CC6296606D800592905 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C3CC5296606D800592905 /* HomeView.swift */; };
 		883C3CC8296606FE00592905 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C3CC7296606FE00592905 /* HomeViewModel.swift */; };
+		886323172993E6FC00DF637A /* AddMyPrivateRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886323162993E6FC00DF637A /* AddMyPrivateRecipeView.swift */; };
+		886323192993E72000DF637A /* AddMyPrivateRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886323182993E72000DF637A /* AddMyPrivateRecipeViewModel.swift */; };
+		8863231B2993E7A400DF637A /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8863231A2993E7A400DF637A /* TextEditorView.swift */; };
+		8863231D2993EEA800DF637A /* PHPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8863231C2993EEA800DF637A /* PHPickerView.swift */; };
+		8863231F2993F5E900DF637A /* CategoryRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8863231E2993F5E900DF637A /* CategoryRecipeView.swift */; };
+		886323232994169C00DF637A /* MyRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886323222994169C00DF637A /* MyRecipeView.swift */; };
+		88632325299416B300DF637A /* MyRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88632324299416B300DF637A /* MyRecipeViewModel.swift */; };
 		88983CFC2969F06000091F03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88983CFB2969F06000091F03 /* GoogleService-Info.plist */; };
 		88983D22296DB64500091F03 /* RectangleCarouselCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88983D21296DB64500091F03 /* RectangleCarouselCategoryView.swift */; };
 		88983D24296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88983D23296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift */; };
@@ -84,6 +91,13 @@
 		883C3CC32966048000592905 /* TemplateMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMainViewModel.swift; sourceTree = "<group>"; };
 		883C3CC5296606D800592905 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		883C3CC7296606FE00592905 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		886323162993E6FC00DF637A /* AddMyPrivateRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMyPrivateRecipeView.swift; sourceTree = "<group>"; };
+		886323182993E72000DF637A /* AddMyPrivateRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMyPrivateRecipeViewModel.swift; sourceTree = "<group>"; };
+		8863231A2993E7A400DF637A /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
+		8863231C2993EEA800DF637A /* PHPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerView.swift; sourceTree = "<group>"; };
+		8863231E2993F5E900DF637A /* CategoryRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRecipeView.swift; sourceTree = "<group>"; };
+		886323222994169C00DF637A /* MyRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeView.swift; sourceTree = "<group>"; };
+		88632324299416B300DF637A /* MyRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecipeViewModel.swift; sourceTree = "<group>"; };
 		88983CFB2969F06000091F03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88983D21296DB64500091F03 /* RectangleCarouselCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCarouselCategoryView.swift; sourceTree = "<group>"; };
 		88983D23296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCarouselCategoryViewModel.swift; sourceTree = "<group>"; };
@@ -117,9 +131,10 @@
 		883BD6992970756400F5BC70 /* AccountViews */ = {
 			isa = PBXGroup;
 			children = (
-				883BD69F2970791600F5BC70 /* AccountView */,
 				883BD69A297075BC00F5BC70 /* SignUpView */,
+				883BD69F2970791600F5BC70 /* AccountView */,
 				883BD6A02970793D00F5BC70 /* UserProfileView */,
+				886323152993E68400DF637A /* AddMyPrivateRecipeView */,
 				883BD6A529707F0E00F5BC70 /* UserProfileSettingsView */,
 			);
 			path = AccountViews;
@@ -227,11 +242,13 @@
 			isa = PBXGroup;
 			children = (
 				88EA71392971B27900FBB206 /* ImagePickerView.swift */,
+				8863231C2993EEA800DF637A /* PHPickerView.swift */,
 				883C3CB02964695000592905 /* BackgroundGlowGradientView.swift */,
 				883C3CAB296468A600592905 /* IconTextFieldView.swift */,
 				883C3CA92964688E00592905 /* TextFieldWithGlowIconView.swift */,
 				88EA7137297185EA00FBB206 /* ImageButtonWithGlowIconView.swift */,
 				883BD69D2970763800F5BC70 /* ButtonWithGlowView.swift */,
+				8863231A2993E7A400DF637A /* TextEditorView.swift */,
 			);
 			path = HelpersView;
 			sourceTree = "<group>";
@@ -240,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				883C3C8D296457E400592905 /* CategoriesRecipeEnum.swift */,
+				8863231E2993F5E900DF637A /* CategoryRecipeView.swift */,
 				883C3C8F2964580D00592905 /* RecipeCategoryCarouselView */,
 				88983D20296DB5DE00091F03 /* RectangleCarouselCategoryView */,
 			);
@@ -306,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				883C3CBD2965D03700592905 /* HomeView */,
+				886323212994036100DF637A /* MyRecipeView */,
 				883C3CBF2965D4C500592905 /* HelperViews */,
 			);
 			path = TabRecipeViews;
@@ -335,6 +354,24 @@
 				883C3CBE2965D06A00592905 /* TemplateMainView */,
 			);
 			path = HelperViews;
+			sourceTree = "<group>";
+		};
+		886323152993E68400DF637A /* AddMyPrivateRecipeView */ = {
+			isa = PBXGroup;
+			children = (
+				886323162993E6FC00DF637A /* AddMyPrivateRecipeView.swift */,
+				886323182993E72000DF637A /* AddMyPrivateRecipeViewModel.swift */,
+			);
+			path = AddMyPrivateRecipeView;
+			sourceTree = "<group>";
+		};
+		886323212994036100DF637A /* MyRecipeView */ = {
+			isa = PBXGroup;
+			children = (
+				886323222994169C00DF637A /* MyRecipeView.swift */,
+				88632324299416B300DF637A /* MyRecipeViewModel.swift */,
+			);
+			path = MyRecipeView;
 			sourceTree = "<group>";
 		};
 		88983D20296DB5DE00091F03 /* RectangleCarouselCategoryView */ = {
@@ -480,13 +517,16 @@
 				883C3C9B29645B7700592905 /* RecipeCard2ViewModel.swift in Sources */,
 				88983D24296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift in Sources */,
 				883C3CC22966042500592905 /* TemplateMainView.swift in Sources */,
+				886323192993E72000DF637A /* AddMyPrivateRecipeViewModel.swift in Sources */,
 				88983D22296DB64500091F03 /* RectangleCarouselCategoryView.swift in Sources */,
 				88EA713029716C5700FBB206 /* UserProfileView.swift in Sources */,
 				883C3C912964582600592905 /* RecipeCategoryCarouselView.swift in Sources */,
+				88632325299416B300DF637A /* MyRecipeViewModel.swift in Sources */,
 				883C3CC42966048000592905 /* TemplateMainViewModel.swift in Sources */,
 				883C3CA129645C6200592905 /* ListRecipeViewModel.swift in Sources */,
 				883C3CB92965B84200592905 /* DetailRecipeViewModel.swift in Sources */,
 				883C3C9929645B3200592905 /* RecipeCard2View.swift in Sources */,
+				886323172993E6FC00DF637A /* AddMyPrivateRecipeView.swift in Sources */,
 				883C3C7E2964546C00592905 /* VisualEffectBlur.swift in Sources */,
 				883C3CA62964680300592905 /* CategoryListRecipeView.swift in Sources */,
 				883C3CAA2964688E00592905 /* TextFieldWithGlowIconView.swift in Sources */,
@@ -494,13 +534,17 @@
 				88EA7134297173D400FBB206 /* UserProfileSettingsView.swift in Sources */,
 				883BD69C297075D300F5BC70 /* SignUpView.swift in Sources */,
 				88EA713A2971B27900FBB206 /* ImagePickerView.swift in Sources */,
+				886323232994169C00DF637A /* MyRecipeView.swift in Sources */,
 				883C3CB32965B74700592905 /* MiniDetailsRecipeView.swift in Sources */,
 				88EA713229716CB700FBB206 /* GradientForPictureProfileView.swift in Sources */,
 				883C3CA82964682600592905 /* CategoryListRecipeViewModel.swift in Sources */,
 				883C3C9D29645B9200592905 /* RecipeCard2Model.swift in Sources */,
+				8863231D2993EEA800DF637A /* PHPickerView.swift in Sources */,
 				883C3CAC296468A600592905 /* IconTextFieldView.swift in Sources */,
 				883C3C932964587600592905 /* RecipeCategoryCarouselViewModel.swift in Sources */,
 				883C3C8E296457E400592905 /* CategoriesRecipeEnum.swift in Sources */,
+				8863231B2993E7A400DF637A /* TextEditorView.swift in Sources */,
+				8863231F2993F5E900DF637A /* CategoryRecipeView.swift in Sources */,
 				883C3C85296454F700592905 /* FirebaseManager.swift in Sources */,
 				883C3C74296452AC00592905 /* Extensions.swift in Sources */,
 				883C3CBB2965CF5300592905 /* MiniDetailsRecipeModel.swift in Sources */,
