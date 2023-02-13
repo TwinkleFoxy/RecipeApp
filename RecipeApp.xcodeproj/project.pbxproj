@@ -40,6 +40,7 @@
 		883C3CC42966048000592905 /* TemplateMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C3CC32966048000592905 /* TemplateMainViewModel.swift */; };
 		883C3CC6296606D800592905 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C3CC5296606D800592905 /* HomeView.swift */; };
 		883C3CC8296606FE00592905 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883C3CC7296606FE00592905 /* HomeViewModel.swift */; };
+		885C8B6829990DFD00890EE8 /* FirebaseDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885C8B6729990DFD00890EE8 /* FirebaseDocumentModel.swift */; };
 		886323172993E6FC00DF637A /* AddMyPrivateRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886323162993E6FC00DF637A /* AddMyPrivateRecipeView.swift */; };
 		886323192993E72000DF637A /* AddMyPrivateRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886323182993E72000DF637A /* AddMyPrivateRecipeViewModel.swift */; };
 		8863231B2993E7A400DF637A /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8863231A2993E7A400DF637A /* TextEditorView.swift */; };
@@ -91,6 +92,7 @@
 		883C3CC32966048000592905 /* TemplateMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMainViewModel.swift; sourceTree = "<group>"; };
 		883C3CC5296606D800592905 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		883C3CC7296606FE00592905 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		885C8B6729990DFD00890EE8 /* FirebaseDocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDocumentModel.swift; sourceTree = "<group>"; };
 		886323162993E6FC00DF637A /* AddMyPrivateRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMyPrivateRecipeView.swift; sourceTree = "<group>"; };
 		886323182993E72000DF637A /* AddMyPrivateRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMyPrivateRecipeViewModel.swift; sourceTree = "<group>"; };
 		8863231A2993E7A400DF637A /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				883C3C79296453FD00592905 /* RecipeFirebaseModel.swift */,
+				885C8B6729990DFD00890EE8 /* FirebaseDocumentModel.swift */,
 			);
 			path = NetworkModels;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				8863231B2993E7A400DF637A /* TextEditorView.swift in Sources */,
 				8863231F2993F5E900DF637A /* CategoryRecipeView.swift in Sources */,
 				883C3C85296454F700592905 /* FirebaseManager.swift in Sources */,
+				885C8B6829990DFD00890EE8 /* FirebaseDocumentModel.swift in Sources */,
 				883C3C74296452AC00592905 /* Extensions.swift in Sources */,
 				883C3CBB2965CF5300592905 /* MiniDetailsRecipeModel.swift in Sources */,
 				883C3CC8296606FE00592905 /* HomeViewModel.swift in Sources */,

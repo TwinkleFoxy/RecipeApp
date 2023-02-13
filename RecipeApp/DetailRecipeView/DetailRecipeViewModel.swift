@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol DetailRecipeViewModelProtocol {
     var name: String { get }
@@ -19,6 +20,10 @@ protocol DetailRecipeViewModelProtocol {
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelProtocol, ObservableObject {
+    
+    var documentID: String {
+        recipeFirebaseModel.documentID
+    }
     
     var name: String {
         recipeFirebaseModel.name
@@ -128,5 +133,14 @@ class DetailRecipeViewModel: DetailRecipeViewModelProtocol, ObservableObject {
     
     required init(recipeFirebaseModel: RecipeFirebaseModel) {
         self.recipeFirebaseModel = recipeFirebaseModel
+    }
+    
+    func topRightButtonPressed(isUserRecipe: Bool, firebaseManager: FirebaseManager, documentID: String, presentationMode: Binding<PresentationMode>) {
+        if isUserRecipe {
+            // MARK: - Must add delete user recipe !!!!!!!!!!
+            presentationMode.wrappedValue.dismiss() // ????????? 
+        } else {
+            firebaseManager.togleFavouriteStatusInFirebase(forRecipe: documentID)
+        }
     }
 }

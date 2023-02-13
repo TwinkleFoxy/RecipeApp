@@ -81,7 +81,7 @@ class AddMyPrivateRecipeViewModel: ObservableObject {
         }
         if isEmptyTextfield {
             alertTitle = "Error"
-            alertMessage = "One of Fields is empty. Please check Fields"
+            alertMessage = "One or more of Fields is empty. Please check Fields"
             saveDataInFirebaseProgressView.toggle()
             showAlertSwitcher.toggle()
             return true

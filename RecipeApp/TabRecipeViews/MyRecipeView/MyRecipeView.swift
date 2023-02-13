@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MyRecipeView: View {
     
+    let isUserRecipe: Bool = true
     @State private var viewModel = MyRecipeViewModel()
     @State private var searchTextFirebase: String = ""
     @Binding var signInSwitcher: Bool
@@ -16,7 +17,7 @@ struct MyRecipeView: View {
     
     var body: some View {
         if signInSwitcher {
-            TemplateMainView(titleView: "Ten Thousand My Recipe:", nameCollectionForCategoryView: $viewModel.userID, searchTextFirebase: $searchTextFirebase, searchedRecipe: $firebaseManager.searchedRecipeForMyRecipe)
+            TemplateMainView(titleView: "Ten Thousand My Recipe:", isUserRecipe: isUserRecipe, nameCollectionForCategoryView: $viewModel.userID, searchTextFirebase: $searchTextFirebase, searchedRecipe: $firebaseManager.searchedRecipeForMyRecipe)
                 .onAppear() {
                     viewModel.getUserID(firebaseManager: firebaseManager)
                     viewModel.searchRecipe(firebaseManager: firebaseManager, searchText: searchTextFirebase)

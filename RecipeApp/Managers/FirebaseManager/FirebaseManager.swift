@@ -18,6 +18,8 @@ class FirebaseManager: ObservableObject {
     @Published var filteredRecipe: [RecipeFirebaseModel] = []
     @Published var searchedRecipeForHomeView: [RecipeFirebaseModel] = []
     @Published var searchedRecipeForMyRecipe: [RecipeFirebaseModel] = []
+    @Published var listUserFavouriteRecipes: [RecipeFirebaseModel] = []
+    @Published var userFavouriteRecipeDocument: [String : Bool] = [ : ]
     @Published var userImage: UIImage?
     @Published var name: String = "Your name"
     @Published var signInSwitcher: Bool = false
@@ -207,6 +209,7 @@ extension FirebaseManager {
         Auth.auth().addStateDidChangeListener { [unowned self] auth, user in
             if user !== nil {
                 signInSwitcher = true
+                updateFavouriteListUserRecipeInApp() {}
             } else {
                 signInSwitcher = false
             }
@@ -476,3 +479,103 @@ extension FirebaseManager {
     }
 }
 
+// MARK: - Work with User Profile Document
+extension FirebaseManager {
+    
+    private func featchUserFavouriteRecipeDocument(closure: @escaping () -> () ) {
+        
+        userFavouriteRecipeDocument.removeAll()
+        
+        guard let userID = getCurrentUserIDFirebase() else { return }
+        
+        featchOneDocument(collectionName: "UserFavouriteRecipe", documentIDName: userID){ [unowned self] oneDocumentFromFirebase in
+            if let documentBody = oneDocumentFromFirebase?.documentBody as? [String : Bool] {
+                userFavouriteRecipeDocument = documentBody
+                closure()
+            } else {
+                closure()
+            }
+        }
+    }
+    
+    private func saveUserFavouriteRecipeDocument() {
+        
+        guard let userID = getCurrentUserIDFirebase() else { return }
+        // If the array with userFavouriteRecipeDocument recipes is out of date, the data in the database will be lost !!!
+        overwritesOrCreateIfNeededDocument(collectionName: "UserFavouriteRecipe", documentIDName: userID, documentData: userFavouriteRecipeDocument)
+        // successTitle: "Favourite staus updated", successMessage: "Recipe favourite status successfully updated"
+    }
+    
+    private func featchListUserFavouriteRecipe(for listIDDocumentsFavouriteRecipe: [String : Bool], inCollection collectionName: String) {
+        listUserFavouriteRecipes.removeAll()
+        
+        for (IDDocumentRecipe, _) in listIDDocumentsFavouriteRecipe {
+            featchOneDocument(collectionName: collectionName, documentIDName: IDDocumentRecipe) { [unowned self] oneFirebaseDocument in
+                if let oneFirebaseDocument = oneFirebaseDocument {
+                    let oneFavouriteRecipe = self.convertFirebaseRecipeDataToRecipeFirebaseModel(documentID: oneFirebaseDocument.documentID, data: oneFirebaseDocument.documentBody)
+                    listUserFavouriteRecipes.append(oneFavouriteRecipe)
+                }
+            }
+        }
+    }
+    
+    func togleFavouriteStatusInFirebase(forRecipe idRecipe: String) {
+        
+        updateFavouriteListUserRecipeInApp { [unowned self] in
+            if userFavouriteRecipeDocument[idRecipe] == true {
+                userFavouriteRecipeDocument.removeValue(forKey: idRecipe)
+                saveUserFavouriteRecipeDocument()
+            } else {
+                userFavouriteRecipeDocument[idRecipe] = true
+                saveUserFavouriteRecipeDocument()
+            }
+        }
+    }
+}
+
+// MARK: - Work Firebase with one document
+extension FirebaseManager {
+    
+    private func featchOneDocument(collectionName: String, documentIDName: String, closure: @escaping (FirebaseDocumentModel?) -> ()) {
+        
+        let db = Firestore.firestore()
+        var document: FirebaseDocumentModel?
+        
+        db.collection(collectionName).document(documentIDName).getDocument { [unowned self] documentSnapshot, error in
+            if let error = error {
+                alertTitle = "Error recive documents"
+                alertMessage = error.localizedDescription
+                showAlertSwitcher.toggle()
+                closure(nil)
+            } else if let documentSnapshot = documentSnapshot {
+                let documentID = documentSnapshot.documentID
+                if let documentData = documentSnapshot.data() {
+                    document = FirebaseDocumentModel(documentID: documentID, documentBody: documentData)
+                    closure(document)
+                } else {
+                    closure(nil)
+                }
+            }
+        }
+    }
+    
+    func updateFavouriteListUserRecipeInApp(closure: @escaping () -> ()) {
+        featchUserFavouriteRecipeDocument { [unowned self] in
+            featchListUserFavouriteRecipe(for: userFavouriteRecipeDocument, inCollection: "Recipe")
+            closure()
+        }
+    }
+    
+    private func overwritesOrCreateIfNeededDocument(collectionName: String, documentIDName: String, documentData: [String : Any]) {
+        
+        let db = Firestore.firestore()
+        let firebaseDocument = db.collection(collectionName).document(documentIDName)
+        firebaseDocument.setData(documentData) { [unowned self] error in
+            if let error = error {
+                alertTitle = "Error"
+                alertMessage = error.localizedDescription
+                showAlertSwitcher.toggle()
+            }
+        }
+    }
+}

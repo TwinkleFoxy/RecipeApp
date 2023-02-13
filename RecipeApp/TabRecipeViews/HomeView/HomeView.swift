@@ -9,12 +9,13 @@ import SwiftUI
 
 struct HomeView: View {
     
+    let isUserRecipe: Bool = false
     @State private var viewModel = HomeViewModel()
     @State private var searchTextFirebase: String = ""
     @EnvironmentObject var firebaseManager: FirebaseManager
     
     var body: some View {
-        TemplateMainView(titleView: "One Thousand New Recipe:", nameCollectionForCategoryView: .constant("Recipe"), searchTextFirebase: $searchTextFirebase, searchedRecipe: $firebaseManager.searchedRecipeForHomeView)
+        TemplateMainView(titleView: "One Thousand New Recipe:", isUserRecipe: isUserRecipe, nameCollectionForCategoryView: .constant("Recipe"), searchTextFirebase: $searchTextFirebase, searchedRecipe: $firebaseManager.searchedRecipeForHomeView)
             .onAppear() {
                 viewModel.searchRecipe(firebaseManager: firebaseManager, searchText: searchTextFirebase)
             }

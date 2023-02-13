@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipeCategoryCarouselView: View {
     
+    let isUserRecipe: Bool
     @Binding var nameCollection: String
     @ObservedObject var viewModel = RecipeCategoryCarouselViewModel()
     @EnvironmentObject var firebaseManager: FirebaseManager
@@ -18,7 +19,8 @@ struct RecipeCategoryCarouselView: View {
             HStack(spacing: 10) {
                 ForEach(CategoryRecipe.allCases, id: \.rawValue) { category in
                     NavigationLink {
-                        CategoryListRecipeView(categoryListRecipeViewModel: viewModel.getCategoryListRecipeViewModel(recipeFirebaseModel: firebaseManager.filteredRecipe))
+                        CategoryListRecipeView(isUserRecipe: isUserRecipe, categoryListRecipeViewModel: viewModel.getCategoryListRecipeViewModel(recipeFirebaseModel: firebaseManager.filteredRecipe))
+                            .environmentObject(firebaseManager)
                             .background {
                                 Image("background-1")
                                     .resizable()
@@ -39,7 +41,7 @@ struct RecipeCategoryCarouselView: View {
 struct RecipeCategoryCarouselView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RecipeCategoryCarouselView(nameCollection: .constant("Recipe"))
+            RecipeCategoryCarouselView(isUserRecipe: false, nameCollection: .constant("Recipe"))
                 .environmentObject( { () -> FirebaseManager in
                     let firebaseManager = FirebaseManager()
                     //firebaseManager.featchPublicRecipeWithMaxLimit(limit: 10)

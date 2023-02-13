@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ListRecipeView: View {
     
+    let isUserRecipe: Bool
     @ObservedObject var listRecipeViewModel: ListRecipeViewModel
+    @EnvironmentObject var firebaseManager: FirebaseManager
     @Binding var searchText: String
     
     let columns = [
@@ -24,7 +26,8 @@ struct ListRecipeView: View {
                 LazyVGrid(columns: columns, spacing: 0) {
                     ForEach(listRecipeViewModel.searchResults, id: \.id) { recipeFirebaseModel in
                         NavigationLink {
-                            DetailRecipeView(viewModel: listRecipeViewModel.getDetailRecipeViewModel(recipeFirebaseModel: recipeFirebaseModel))
+                            DetailRecipeView(isUserRecipe: isUserRecipe, viewModel: listRecipeViewModel.getDetailRecipeViewModel(recipeFirebaseModel: recipeFirebaseModel))
+                                .environmentObject(firebaseManager)
                         } label: {
                             RecipeCard2View(frameWidth: (geometry.size.width / 2) - 16, frameMaxHeight: ((geometry.size.width / 2) - 16) / 1.3, iconFrameWidth: 44, iconFrameHeight: 44, recipeCard2ViewModel: listRecipeViewModel.getRecipeCard2ViewModel(recipeFirebaseModel: recipeFirebaseModel))
                                 .padding(.vertical)
@@ -43,7 +46,12 @@ struct ListRecipeView: View {
 struct ListRecipeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ListRecipeView(listRecipeViewModel: ListRecipeViewModel(recipeFirebaseModel: [RecipeFirebaseModel.getFakeData()]), searchText: .constant(""))
+            ListRecipeView(isUserRecipe: true, listRecipeViewModel: ListRecipeViewModel(recipeFirebaseModel: [RecipeFirebaseModel.getFakeData()]), searchText: .constant(""))
+                .environmentObject( { () -> FirebaseManager in
+                                let firebaseManager = FirebaseManager()
+                //                 firebaseManager.featchPublicRecipeWithMaxLimit(limit: 10)
+                                return firebaseManager
+                            }() )
                 .preferredColorScheme(.dark)
         }
     }

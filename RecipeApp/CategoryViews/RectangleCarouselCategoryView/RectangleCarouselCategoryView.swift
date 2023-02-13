@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RectangleCarouselCategoryView: View {
     
+    let isUserRecipe: Bool
     @ObservedObject var viewModel = RectangleCarouselCategoryViewModel()
     @EnvironmentObject var firebaseManager: FirebaseManager
     
@@ -16,7 +17,8 @@ struct RectangleCarouselCategoryView: View {
         ScrollView(.vertical, showsIndicators: false) {
             ForEach(CategoryRecipe.allCases, id: \.rawValue) { category in
                 NavigationLink {
-                    CategoryListRecipeView(categoryListRecipeViewModel: viewModel.getCategoryListRecipeViewModel(recipeFirebaseModel: firebaseManager.filteredRecipe))
+                    CategoryListRecipeView(isUserRecipe: isUserRecipe, categoryListRecipeViewModel: viewModel.getCategoryListRecipeViewModel(recipeFirebaseModel: firebaseManager.filteredRecipe))
+                        .environmentObject(firebaseManager)
                         .background {
                             Image("background-1")
                                 .resizable()
@@ -42,7 +44,7 @@ struct RectangleCarouselCategoryView: View {
 struct RectangleCarouselCategoryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RectangleCarouselCategoryView()
+            RectangleCarouselCategoryView(isUserRecipe: false)
                 .environmentObject( { () -> FirebaseManager in
                     let firebaseManager = FirebaseManager()
                     firebaseManager.featchPublicRecipeWithMaxLimit(limit: 10)
