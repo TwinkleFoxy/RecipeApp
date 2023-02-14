@@ -9,8 +9,12 @@ import SwiftUI
 
 struct DetailRecipeView: View {
     
+    let isUserRecipe: Bool
     @State private var selectedPage = 0
     @ObservedObject var viewModel: DetailRecipeViewModel
+    @EnvironmentObject var firebaseManager: FirebaseManager
+    
+    @Environment (\.presentationMode) var presentationMode
     
     var body: some View {
         GeometryReader { geometry in
@@ -34,17 +38,13 @@ struct DetailRecipeView: View {
                     .tabViewStyle(.page)
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
                     
-                    // Favourite Button
-//                    Button {
-//
-//                    } label: {
-//                        Image(systemName: "star.fill")
-//                            .resizable()
-//                            .foregroundColor(.pink_gradient_1)
-//                    }
-//                    .frame(width: 35, height: 35)
-//                    .padding(10)
-                    
+                    // Favourite / Trash  Button
+                    TopRightButtonView(isUserRecipe: isUserRecipe, foregroundFavouriteButton: firebaseManager.userFavouriteRecipeDocument[viewModel.documentID]) {
+                        // MARK: - Look at ViewModel delete coment !!!!!!!!!!
+                        viewModel.topRightButtonPressed(isUserRecipe: isUserRecipe, firebaseManager: firebaseManager, documentID: viewModel.documentID, presentationMode: presentationMode)
+                    }
+                    .frame(width: 35, height: 35)
+                    .padding(10)
                 }
                 .cornerRadius(15)
                 .padding(.horizontal)
@@ -93,9 +93,6 @@ struct DetailRecipeView: View {
                     }
                     .tabViewStyle(PageTabViewStyle())
                     .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .interactive))
-                    .background {
-                        
-                    }
                 }
                 .cornerRadius(15)
                 .padding()
@@ -106,14 +103,45 @@ struct DetailRecipeView: View {
                 .resizable()
                 .ignoresSafeArea()
         }
+        .alert(firebaseManager.alertTitle, isPresented: $firebaseManager.showAlertSwitcher, actions: {}, message: {
+            Text(firebaseManager.alertMessage)
+        })
     }
 }
 
 struct DetailRecipeView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = DetailRecipeViewModel(recipeFirebaseModel: RecipeFirebaseModel.getFakeData())
-        DetailRecipeView(viewModel: viewModel)
+        DetailRecipeView(isUserRecipe: true, viewModel: viewModel)
             .preferredColorScheme(.dark)
     }
 }
 
+
+
+private struct TopRightButtonView: View {
+    
+    let isUserRecipe: Bool
+    var foregroundFavouriteButton: Bool?
+    let action: () -> ()
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            if isUserRecipe {
+                Image(systemName: "trash.circle.fill")
+                    .resizable()
+                    .foregroundColor(.pink_gradient_1)
+                    .opacity(0.75)
+            } else {
+                Image(systemName: "star.fill")
+                    .resizable()
+                    .foregroundColor(foregroundFavouriteButton ?? false ? .pink : .pink_gradient_1)
+            }
+        }
+        .frame(width: 35, height: 35)
+        .padding(10)
+        .opacity(isUserRecipe ? 0 : 1) // MARK: - !!!!! Delete this line then add delete user recipe !!!!!!!!!!!!!
+    }
+}

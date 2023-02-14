@@ -57,8 +57,7 @@ struct UserProfileView: View {
                 
                 VStack {
                     ButtonWithGlowView(title: "Add my private Recipe") {
-                        //MARK: - Delete then created my recipe view
-                        //showAddMyPrivateRecipeSwitcher.toggle()
+                        showAddMyPrivateRecipeSwitcher.toggle()
                     }
                 }
             }
@@ -114,8 +113,7 @@ struct UserProfileView: View {
             UserProfileSettingsView()
         })
         .fullScreenCover(isPresented: $showAddMyPrivateRecipeSwitcher) {
-            //MARK: - Create my recipe view
-//            AddMyPrivateRecipeView()
+            AddMyPrivateRecipeView()
         }
         
     }

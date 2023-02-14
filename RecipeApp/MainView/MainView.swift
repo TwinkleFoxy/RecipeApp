@@ -34,7 +34,7 @@ struct MainView: View {
                     
                     
                     // Category List View
-                    RectangleCarouselCategoryView()
+                    RectangleCarouselCategoryView(isUserRecipe: false)
                         .padding(.leading, 9)
                         .padding(.top, 5)
                         .tabItem {
@@ -71,7 +71,7 @@ struct MainView: View {
                     // Self Saved Recipe View
                     MyRecipeView(signInSwitcher: $firebaseManager.signInSwitcher)
                         .padding(.leading, 9)
-                        .padding(.top, 5)
+                        .padding(.top, 92)
                         .tabItem {
                             Label("My Recipe", systemImage: "leaf")
                         }
