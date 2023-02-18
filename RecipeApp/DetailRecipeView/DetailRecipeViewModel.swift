@@ -17,9 +17,19 @@ protocol DetailRecipeViewModelProtocol {
     var ingredients: [String] { get }
     var metods: [String] { get }
     init(recipeFirebaseModel: RecipeFirebaseModel)
+    func topRightButtonPressed(isUserRecipe: Bool, firebaseManager: FirebaseManager, documentID: String, presentationMode: Binding<PresentationMode>)
+    func confirmedDeleteRecipeFromAllert(firebaseManager: FirebaseManager, presentationMode: Binding<PresentationMode>)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelProtocol, ObservableObject {
+    
+    @Published var showAlertSwitcherAuth: Bool = false
+    @Published var alertTitleAuth: String = ""
+    @Published var alertMessageAuth: String = ""
+    
+    @Published var showAlertSwitcherConfirmDeleteUserRecipe: Bool = false
+    @Published var alertTitleConfirmDeleteUserRecipe: String = ""
+    @Published var alertMessageConfirmDeleteUserRecipe: String = ""
     
     var documentID: String {
         recipeFirebaseModel.documentID
@@ -137,10 +147,33 @@ class DetailRecipeViewModel: DetailRecipeViewModelProtocol, ObservableObject {
     
     func topRightButtonPressed(isUserRecipe: Bool, firebaseManager: FirebaseManager, documentID: String, presentationMode: Binding<PresentationMode>) {
         if isUserRecipe {
-            // MARK: - Must add delete user recipe !!!!!!!!!!
-            presentationMode.wrappedValue.dismiss() // ????????? 
+            alertTitleConfirmDeleteUserRecipe = "Delete this recipe"
+            alertMessageConfirmDeleteUserRecipe = "Are you sure to delete the recipe?"
+            showAlertSwitcherConfirmDeleteUserRecipe.toggle()
         } else {
+            toggleFavouriteStatusRecipeInFirebase(firebaseManager: firebaseManager)
+        }
+    }
+    
+    func confirmedDeleteRecipeFromAllert(firebaseManager: FirebaseManager, presentationMode: Binding<PresentationMode>) {
+        if firebaseManager.signInSwitcher {
+            firebaseManager.deliteUserRecipeDocument(documentIDNameUserRecipeForDelete: documentID) {
+                presentationMode.wrappedValue.dismiss()
+            }
+        } else {
+            alertTitleAuth = "You not authorised in Account"
+            alertMessageAuth = "Please login or register in tab Account. Then you can add recipe in favourite list."
+            showAlertSwitcherAuth.toggle()
+        }
+    }
+    
+    private func toggleFavouriteStatusRecipeInFirebase(firebaseManager: FirebaseManager) {
+        if firebaseManager.signInSwitcher {
             firebaseManager.togleFavouriteStatusInFirebase(forRecipe: documentID)
+        } else {
+            alertTitleAuth = "You not authorised in Account"
+            alertMessageAuth = "Please login or register in tab Account. Then you can add recipe in favourite list."
+            showAlertSwitcherAuth.toggle()
         }
     }
 }

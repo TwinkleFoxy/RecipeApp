@@ -327,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				883C3CBD2965D03700592905 /* HomeView */,
+				8845AEB8299A95760091E4B1 /* FavouriteRecipeView */,
 				886323212994036100DF637A /* MyRecipeView */,
 				883C3CBF2965D4C500592905 /* HelperViews */,
 			);
@@ -357,6 +358,13 @@
 				883C3CBE2965D06A00592905 /* TemplateMainView */,
 			);
 			path = HelperViews;
+			sourceTree = "<group>";
+		};
+		8845AEB8299A95760091E4B1 /* FavouriteRecipeView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FavouriteRecipeView;
 			sourceTree = "<group>";
 		};
 		886323152993E68400DF637A /* AddMyPrivateRecipeView */ = {

@@ -49,24 +49,21 @@ struct MainView: View {
                         .environmentObject(firebaseManager)
                     
                     
-                    // Favourite View
-//                    VStack() {
-//                        Text("Favourite Recipe")
-//                            .font(.title2)
-//                            .bold()
-//                            .foregroundColor(.white.opacity(0.7))
-//                            .padding(.top, 2)
-//                    }
-//                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-//                    .tabItem {
-//                        Label("Favourite", systemImage: "star")
-//                    }
-//                    .tag(3)
-//                    .background {
-//                        Image("background-1")
-//                            .resizable()
-//                            .ignoresSafeArea()
-//                    }
+                    // Public Favourite For User View
+//                    FavouriteRecipeView(signInSwitcher: $firebaseManager.signInSwitcher)
+//                        .padding(.leading, 9)
+//                        .padding(.top, 5)
+//                        .tabItem {
+//                            Label("Favourite", systemImage: "star")
+//                        }
+//                        .tag(3)
+//                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//                        .background {
+//                            Image("background-1")
+//                                .resizable()
+//                                .ignoresSafeArea()
+//                        }
+//                        .environmentObject(firebaseManager)
                     
                     // Self Saved Recipe View
                     MyRecipeView(signInSwitcher: $firebaseManager.signInSwitcher)

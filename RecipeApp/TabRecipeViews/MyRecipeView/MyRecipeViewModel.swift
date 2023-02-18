@@ -9,15 +9,16 @@ import Foundation
 
 protocol MyRecipeViewModelProtocol {
     func searchRecipe(firebaseManager: FirebaseManager, searchText: String, limitToReceive: Int)
+    func getUserID(firebaseManager: FirebaseManager)
 }
 
-class MyRecipeViewModel: ObservableObject {
+class MyRecipeViewModel: MyRecipeViewModelProtocol, ObservableObject {
     
     @Published var userID: String = ""
     
     var timer: Timer?
     
-    func getUserID(firebaseManager: FirebaseManager){
+    func getUserID(firebaseManager: FirebaseManager) {
         guard let userID = firebaseManager.getCurrentUserIDFirebase() else { self.userID = ""; return }
         self.userID = userID
     }

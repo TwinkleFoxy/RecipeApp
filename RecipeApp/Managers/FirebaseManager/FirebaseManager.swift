@@ -84,7 +84,7 @@ extension FirebaseManager {
         }
     }
     
-    private func searchRecipe(searchText: String, byField name: String, inCollection nameCollection: String, limitToReceive: Int = 100000, clousere: @escaping ([RecipeFirebaseModel])->()) {
+    private func searchRecipe(searchText: String, byField name: String, inCollection nameCollection: String, limitToReceive: Int = 100000, closure: @escaping ([RecipeFirebaseModel])->()) {
         
         let db = Firestore.firestore()
         
@@ -98,12 +98,12 @@ extension FirebaseManager {
             
             if let arrayRecipeFirebaseModel = arrayRecipeFirebaseModel {
                 searchResultArray = arrayRecipeFirebaseModel
-                clousere(searchResultArray)
+                closure(searchResultArray)
             }
         }
     }
     
-    func addUserRecipeDocument(previewImage: UIImage?, descriptionImages: [UIImage], recipeFirebaseModel: RecipeFirebaseModel, clousere: @escaping ()->()) {
+    func addUserRecipeDocument(previewImage: UIImage?, descriptionImages: [UIImage], recipeFirebaseModel: RecipeFirebaseModel, closure: @escaping ()->()) {
         
         var previewImageURL: String = ""
         var descriptionImagesURL: [String] = []
@@ -126,9 +126,18 @@ extension FirebaseManager {
             uploadDescriptionImage(descriptionImages: descriptionImages, userID: userID, documentID: documentID) { [unowned self] imagesURLArrayString in
                 descriptionImagesURL = imagesURLArrayString
                 saveDocumentResipe(publesherUserID: userID, recipeFirebaseModel: recipeFirebaseModel, previewImageURL: previewImageURL, descriptionImagesURL: descriptionImagesURL, firebaseDocument: firebaseDocument) {
-                    clousere()
+                    closure()
                 }
             }
+        }
+    }
+    
+    func deliteUserRecipeDocument(documentIDNameUserRecipeForDelete documentIDName: String, closure: @escaping () -> ()) {
+        
+        guard let currantUserID = getCurrentUserIDFirebase() else { return }
+        
+        deleteDocument(inCollection: currantUserID, documentIDName: documentIDName) {
+            closure()
         }
     }
 }
@@ -190,13 +199,13 @@ extension FirebaseManager {
         }
     }
     
-    func signOutFromFirebaseAuth(clousere: @escaping ()->()) {
+    func signOutFromFirebaseAuth(closure: @escaping ()->()) {
         DispatchQueue.main.async { [unowned self] in
             do {
                 try Auth.auth().signOut()
                 name = "Your name"
                 userImage = nil
-                clousere()
+                closure()
             } catch (let error) {
                 alertTitle = "Error. Can't logout from account"
                 alertMessage = error.localizedDescription
@@ -410,7 +419,7 @@ extension FirebaseManager {
 // MARK: - Private funcs upload resipe
 extension FirebaseManager {
     
-    private func uploadPreviewImageForRecipe(previewImage: UIImage?, userID: String, documentID: String, clousere: @escaping (_ imageURLString: String) -> ()) {
+    private func uploadPreviewImageForRecipe(previewImage: UIImage?, userID: String, documentID: String, closure: @escaping (_ imageURLString: String) -> ()) {
         // Upload preview image
         if let previewImage = previewImage {
             uploadImage(image: previewImage, saveImagePath: "users/\(userID)/\(documentID)/\(randomString(length: 10))") { [unowned self] url, error in
@@ -420,17 +429,17 @@ extension FirebaseManager {
                         alertMessage = error.localizedDescription
                     }
                     showAlertSwitcher.toggle()
-                    clousere("")
+                    closure("")
                     return
                 }
-                clousere(url.absoluteString)
+                closure(url.absoluteString)
             }
         } else {
-            clousere("")
+            closure("")
         }
     }
     
-    private func uploadDescriptionImage(descriptionImages: [UIImage], userID: String, documentID: String, clousere: @escaping (_ imagesURLArrayString: [String]) -> ()) {
+    private func uploadDescriptionImage(descriptionImages: [UIImage], userID: String, documentID: String, closure: @escaping (_ imagesURLArrayString: [String]) -> ()) {
         // Upload description image
         var descriptionImagesURL: [String] = []
         
@@ -443,21 +452,21 @@ extension FirebaseManager {
                             alertMessage = error.localizedDescription
                         }
                         showAlertSwitcher.toggle()
-                        clousere([])
+                        closure([])
                         return
                     }
                     descriptionImagesURL.append(url.absoluteString)
                     if descriptionImages.count == descriptionImagesURL.count {
-                        clousere(descriptionImagesURL)
+                        closure(descriptionImagesURL)
                     }
                 }
             }
         } else {
-            clousere([])
+            closure([])
         }
     }
     
-    private func saveDocumentResipe(publesherUserID: String, recipeFirebaseModel: RecipeFirebaseModel, previewImageURL: String, descriptionImagesURL: [String], firebaseDocument: DocumentReference, clousere: @escaping () -> ()) {
+    private func saveDocumentResipe(publesherUserID: String, recipeFirebaseModel: RecipeFirebaseModel, previewImageURL: String, descriptionImagesURL: [String], firebaseDocument: DocumentReference, closure: @escaping () -> ()) {
         var recipeFirebaseModel = recipeFirebaseModel
         recipeFirebaseModel.imagePreviewURL = previewImageURL
         recipeFirebaseModel.imagesDescriptionURL = descriptionImagesURL
@@ -468,18 +477,18 @@ extension FirebaseManager {
         // Save new Document Recipe
         firebaseDocument.setData(userRecipe, completion: { [unowned self] error in
             if error == nil {
-                clousere()
+                closure()
             } else {
                 alertTitle = "Error can't save recipe"
                 alertMessage = error?.localizedDescription ?? "Can't create document"
                 showAlertSwitcher.toggle()
-                clousere()
+                closure()
             }
         })
     }
 }
 
-// MARK: - Work with User Profile Document
+// MARK: - Work with user favourite recipe
 extension FirebaseManager {
     
     private func featchUserFavouriteRecipeDocument(closure: @escaping () -> () ) {
@@ -516,6 +525,17 @@ extension FirebaseManager {
                     listUserFavouriteRecipes.append(oneFavouriteRecipe)
                 }
             }
+        }
+    }
+}
+
+// MARK: - Work with favourite list document
+extension FirebaseManager {
+    
+    func updateFavouriteListUserRecipeInApp(closure: @escaping () -> ()) {
+        featchUserFavouriteRecipeDocument { [unowned self] in
+            featchListUserFavouriteRecipe(for: userFavouriteRecipeDocument, inCollection: "Recipe")
+            closure()
         }
     }
     
@@ -559,13 +579,6 @@ extension FirebaseManager {
         }
     }
     
-    func updateFavouriteListUserRecipeInApp(closure: @escaping () -> ()) {
-        featchUserFavouriteRecipeDocument { [unowned self] in
-            featchListUserFavouriteRecipe(for: userFavouriteRecipeDocument, inCollection: "Recipe")
-            closure()
-        }
-    }
-    
     private func overwritesOrCreateIfNeededDocument(collectionName: String, documentIDName: String, documentData: [String : Any]) {
         
         let db = Firestore.firestore()
@@ -575,6 +588,21 @@ extension FirebaseManager {
                 alertTitle = "Error"
                 alertMessage = error.localizedDescription
                 showAlertSwitcher.toggle()
+            }
+        }
+    }
+    
+    private func deleteDocument(inCollection collectionName: String, documentIDName documentID: String, closure: @escaping () -> ()) {
+        
+        let db = Firestore.firestore()
+        db.collection(collectionName).document(documentID).delete { [unowned self] error in
+            if let errorLocalizedDescription = error?.localizedDescription {
+                alertTitle = "Error"
+                alertMessage = errorLocalizedDescription
+                showAlertSwitcher.toggle()
+                closure()
+            } else {
+                closure()
             }
         }
     }
