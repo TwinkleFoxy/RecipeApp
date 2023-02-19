@@ -40,7 +40,6 @@ struct DetailRecipeView: View {
                     
                     // Favourite / Trash  Button
                     TopRightButtonView(isUserRecipe: isUserRecipe, foregroundFavouriteButton: firebaseManager.userFavouriteRecipeDocument[viewModel.documentID]) {
-                        // MARK: - Look at ViewModel delete coment !!!!!!!!!!
                         viewModel.topRightButtonPressed(isUserRecipe: isUserRecipe, firebaseManager: firebaseManager, documentID: viewModel.documentID, presentationMode: presentationMode)
                     }
                     .frame(width: 35, height: 35)
@@ -104,8 +103,19 @@ struct DetailRecipeView: View {
                 .ignoresSafeArea()
         }
         .alert(firebaseManager.alertTitle, isPresented: $firebaseManager.showAlertSwitcher, actions: {}, message: {
-            Text(firebaseManager.alertMessage)
+            Text(firebaseManager.alertMessage) // Alert for error at firebase
         })
+        .alert(viewModel.alertTitleAuth, isPresented: $viewModel.showAlertSwitcherAuth, actions: {}, message: {
+            Text(viewModel.alertMessageAuth) // Alert for error at viewModel then user not authorized
+        })
+        .alert(viewModel.alertTitleConfirmDeleteUserRecipe, isPresented: $viewModel.showAlertSwitcherConfirmDeleteUserRecipe) {
+            Button(role: .cancel, action: {}, label: { Text("Cancel") })
+            Button(role: .destructive, action: {
+                viewModel.confirmedDeleteRecipeFromAllert(firebaseManager: firebaseManager, presentationMode: presentationMode)
+            }, label: { Text("Delete") } )
+        } message: {
+            Text(viewModel.alertMessageConfirmDeleteUserRecipe)
+        } // Alert for confirm the user's desire to delete the recipe
     }
 }
 
@@ -142,6 +152,5 @@ private struct TopRightButtonView: View {
         }
         .frame(width: 35, height: 35)
         .padding(10)
-        .opacity(isUserRecipe ? 0 : 1) // MARK: - !!!!! Delete this line then add delete user recipe !!!!!!!!!!!!!
     }
 }
