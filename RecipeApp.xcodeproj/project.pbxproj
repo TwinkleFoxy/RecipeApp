@@ -51,6 +51,8 @@
 		88983CFC2969F06000091F03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88983CFB2969F06000091F03 /* GoogleService-Info.plist */; };
 		88983D22296DB64500091F03 /* RectangleCarouselCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88983D21296DB64500091F03 /* RectangleCarouselCategoryView.swift */; };
 		88983D24296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88983D23296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift */; };
+		88A58C4729A770960046F33E /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A58C4629A770960046F33E /* CustomTabBarView.swift */; };
+		88A58C4929A770B40046F33E /* CustomTabBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A58C4829A770B40046F33E /* CustomTabBarModel.swift */; };
 		88EA713029716C5700FBB206 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA712F29716C5700FBB206 /* UserProfileView.swift */; };
 		88EA713229716CB700FBB206 /* GradientForPictureProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA713129716CB700FBB206 /* GradientForPictureProfileView.swift */; };
 		88EA7134297173D400FBB206 /* UserProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EA7133297173D400FBB206 /* UserProfileSettingsView.swift */; };
@@ -103,6 +105,8 @@
 		88983CFB2969F06000091F03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88983D21296DB64500091F03 /* RectangleCarouselCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCarouselCategoryView.swift; sourceTree = "<group>"; };
 		88983D23296DB66B00091F03 /* RectangleCarouselCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCarouselCategoryViewModel.swift; sourceTree = "<group>"; };
+		88A58C4629A770960046F33E /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
+		88A58C4829A770B40046F33E /* CustomTabBarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarModel.swift; sourceTree = "<group>"; };
 		88EA712F29716C5700FBB206 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		88EA713129716CB700FBB206 /* GradientForPictureProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientForPictureProfileView.swift; sourceTree = "<group>"; };
 		88EA7133297173D400FBB206 /* UserProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSettingsView.swift; sourceTree = "<group>"; };
@@ -244,6 +248,7 @@
 		883C3C892964572100592905 /* HelpersView */ = {
 			isa = PBXGroup;
 			children = (
+				88A58C4529A7702A0046F33E /* CustomTabBar */,
 				88EA71392971B27900FBB206 /* ImagePickerView.swift */,
 				8863231C2993EEA800DF637A /* PHPickerView.swift */,
 				883C3CB02964695000592905 /* BackgroundGlowGradientView.swift */,
@@ -394,6 +399,15 @@
 			path = RectangleCarouselCategoryView;
 			sourceTree = "<group>";
 		};
+		88A58C4529A7702A0046F33E /* CustomTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				88A58C4629A770960046F33E /* CustomTabBarView.swift */,
+				88A58C4829A770B40046F33E /* CustomTabBarModel.swift */,
+			);
+			path = CustomTabBar;
+			sourceTree = "<group>";
+		};
 		88EB4A6729644EE800A2936A = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +544,7 @@
 				883C3CC22966042500592905 /* TemplateMainView.swift in Sources */,
 				886323192993E72000DF637A /* AddMyPrivateRecipeViewModel.swift in Sources */,
 				88983D22296DB64500091F03 /* RectangleCarouselCategoryView.swift in Sources */,
+				88A58C4729A770960046F33E /* CustomTabBarView.swift in Sources */,
 				88EA713029716C5700FBB206 /* UserProfileView.swift in Sources */,
 				883C3C912964582600592905 /* RecipeCategoryCarouselView.swift in Sources */,
 				88632325299416B300DF637A /* MyRecipeViewModel.swift in Sources */,
@@ -547,6 +562,7 @@
 				88EA713A2971B27900FBB206 /* ImagePickerView.swift in Sources */,
 				886323232994169C00DF637A /* MyRecipeView.swift in Sources */,
 				883C3CB32965B74700592905 /* MiniDetailsRecipeView.swift in Sources */,
+				88A58C4929A770B40046F33E /* CustomTabBarModel.swift in Sources */,
 				88EA713229716CB700FBB206 /* GradientForPictureProfileView.swift in Sources */,
 				883C3CA82964682600592905 /* CategoryListRecipeViewModel.swift in Sources */,
 				883C3C9D29645B9200592905 /* RecipeCard2Model.swift in Sources */,
